@@ -143,14 +143,10 @@ exports.delete_method = function(req,res){
      });
 };
 
-exports.paypal = function(req, res){
-  res.render('paypal',{page_title:"Paypal Payment Process- Node.js"});
+exports.transaction = function(req, res){
+  res.render('transaction',{page_title:" Payment Process- Node.js"});
 };
-
-exports.braintree = function(req, res){
-  res.render('braintree',{page_title:"Braintree Payment Process - Node.js"});
-};
-
+ 
 
 var braintree = require('braintree');
 

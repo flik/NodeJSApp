@@ -68,8 +68,7 @@ app.get('/methods/edit/:id', methods.edit);
 app.post('/methods/edit/:id',methods.save_edit);
 
 //
-app.get('/methods/paypal', methods.paypal);
-app.get('/methods/braintree',methods.braintree);
+app.get('/methods/transaction', methods.transaction);
 
 app.post('/methods/create_transaction_braintree', methods.create_transaction_braintree);
 
