@@ -233,9 +233,7 @@ exports.create_transaction_braintree = function(req,res){
 exports.create_transaction_paypal = function(req,res){
     
     var input = JSON.parse(JSON.stringify(req.body));
-    var id = req.params.id;
-  
-  
+     
 	  var card_data = {
 	  "type": "visa",
 	  "number": req.body.number,
@@ -249,7 +247,7 @@ exports.create_transaction_paypal = function(req,res){
 	paypal.creditCard.create(card_data, function(error, credit_card){
 	  if (error) {
 		console.log(error);
-		throw error;
+		//throw error;
 	  } else {
 		console.log("Create Credit-Card Response");
 		console.log(credit_card);
