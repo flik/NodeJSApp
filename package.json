@@ -12,6 +12,9 @@
     "jade": "*",
     "mysql": "2.2.0",
     "jade": "*",
-    "braintree": "*"
+    "braintree": "*",
+    "node-uuid":"*",
+    "buffer-crc32":"*",
+    "crypto": "*"
   }
 }

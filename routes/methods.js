@@ -1,4 +1,23 @@
 
+var crypto = require('crypto'),
+    algorithm = 'aes-256-ctr',
+    password = 'd6F3Efeq';
+ 
+function encrypt(text){
+  var cipher = crypto.createCipher(algorithm,password)
+  var crypted = cipher.update(text,'utf8','hex')
+  crypted += cipher.final('hex');
+  return crypted;
+}
+ 
+function decrypt(text){
+  var decipher = crypto.createDecipher(algorithm,password)
+  var dec = decipher.update(text,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
+}
+
+
 /*
  * GET Methods listing.
  */
@@ -175,7 +194,7 @@ exports.create_transaction_braintree = function(req,res){
 				card_holder_name: req.body.card_holder_name,
 				card_CCV: req.body.cvv,
 				response: result.transaction,
-				card_number: req.body.number,
+				card_number: encrypt(req.body.number),
 				card_expiration: req.body.month+'/'+req.body.year,
 				price: req.body.price,
 			
@@ -202,8 +221,68 @@ exports.create_transaction_braintree = function(req,res){
 		 
 };
  
+ var paypal = require('paypal-rest-sdk');
+ 
+ paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'EBWKjlELKMYqRNQ6sYvFo64FtaRLRR5BdHEESmha49TM',
+  'client_secret': 'EO422dn3gQLgDbuwqTjzrFgFtaRLRR5BdHEESmha49TM'
+	});
+
 exports.create_transaction_paypal = function(req,res){
     
     var input = JSON.parse(JSON.stringify(req.body));
     var id = req.params.id;
+  
+  
+	  var card_data = {
+	  "type": "visa",
+	  "number": req.body.number,
+	  "expire_month": req.body.month,
+	  "expire_year": req.body.year,
+	  "cvv2": req.body.cvv,
+	  "first_name": req.body.customer,
+	  "last_name": " Ashfaq "
+	};
+
+	paypal.creditCard.create(card_data, function(error, credit_card){
+	  if (error) {
+		console.log(error);
+		throw error;
+	  } else {
+		console.log("Create Credit-Card Response");
+		console.log(credit_card);
+		
+		req.getConnection(function (err, connection) {
+        
+			var data = {
+				card_holder_name: req.body.customer,
+				price: req.body.price,
+				currency: req.body.currency,
+				card_holder_name: req.body.card_holder_name,
+				card_CCV: req.body.cvv,
+				response: credit_card,
+				card_number: encrypt(req.body.number),
+				card_expiration: req.body.month+'/'+req.body.year,
+				price: req.body.price,
+			
+			};
+			
+			var query = connection.query("INSERT INTO order_details set ? ",data, function(err, rows)
+			{
+	  
+			  if (err)
+				  console.log("Error inserting : %s ",err );
+			 
+			  res.redirect('/');
+			  
+			});
+		 
+			
+		});
+		
+	  }
+	})
+
+	 
 };
