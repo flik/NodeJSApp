@@ -70,10 +70,9 @@ app.post('/methods/edit/:id',methods.save_edit);
 //
 app.get('/methods/paypal', methods.paypal);
 app.get('/methods/braintree',methods.braintree);
-app.get('/methods/create_transaction_braintree', methods.create_transaction_braintree);
+
 app.post('/methods/create_transaction_braintree', methods.create_transaction_braintree);
 
-app.get('/methods/create_transaction_paypal', methods.create_transaction_paypal);
 app.post('/methods/create_transaction_paypal', methods.create_transaction_paypal);
 
 app.use(app.router);

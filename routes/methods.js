@@ -169,14 +169,15 @@ var gateway = braintree.connect({
 exports.create_transaction_braintree = function(req,res){
     
     var input = JSON.parse(JSON.stringify(req.body));
-    var id = req.params.id;
+     
+	console.log('creditCard number: ' + req.body.number);
   
 	gateway.transaction.sale({
 		  amount: req.body.price,
 		  creditCard: {
-			number: req.body.number,
-			expirationMonth: req.body.month,
-			expirationYear: req.body.year
+			number: input.number,
+			expirationMonth: input.month,
+			expirationYear: input.year
 		  }
 		}, function (err, result) {
 		  if (err) throw err;
@@ -188,15 +189,15 @@ exports.create_transaction_braintree = function(req,res){
 			req.getConnection(function (err, connection) {
         
 			var data = {
-				card_holder_name: req.body.customer,
-				price: req.body.price,
-				currency: req.body.currency,
-				card_holder_name: req.body.card_holder_name,
-				card_CCV: req.body.cvv,
+				card_holder_name: input.customer,
+				price: input.price,
+				currency: input.currency,
+				card_holder_name: input.card_holder_name,
+				card_CCV: input.cvv,
 				response: result.transaction,
-				card_number: encrypt(req.body.number),
-				card_expiration: req.body.month+'/'+req.body.year,
-				price: req.body.price,
+				card_number: encrypt(input.number),
+				card_expiration: input.month+'/'+input.year,
+				price: input.price,
 			
 			};
 			
