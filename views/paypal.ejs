@@ -5,7 +5,7 @@
             
                  <h1>Paypal Credit Card Transaction </h1>
     <div>
-      <form action="/methods/create_transaction_paypal" method="POST" id="braintree-payment-form">
+      <form action="/methods/create_transaction_paypal" method="POST" id="paypal-payment-form">
         
         <table cellpadding="11">
                 <tr>
@@ -21,7 +21,7 @@
                     <select name="currency" class="form-control input-sm">
 						<option value="USD">USD</option>
 						<option value="EUR">EUR</option>
-						<option value="PKR">PKR</option>
+						<option value="AUD">AUD</option>
                     </select>
                      
                     </td>
@@ -36,7 +36,7 @@
                  </tr>
                  
                  <tr>
-                    <td class="label">Card Number</td><td>:  <input type="text" size="20" autocomplete="off" name="number" required></td>
+                    <td class="label">Card Number</td><td>:  <input type="text" size="20" autocomplete="off" id="number"  name="number" required></td>
                  </tr>
                  
                  <tr>
@@ -60,6 +60,25 @@
       </form>
     </div>
      
+      <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+<script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+<script>
+	// just for the demos, avoids form submit
+	jQuery.validator.setDefaults({
+		debug: true,
+		success: "valid"
+	});
+	$( "#paypal-payment-form" ).validate({
+		rules: {
+			number: {
+				required: true,
+				creditcard: true
+			}
+		}
+	});
+</script>
+ 
         </div>
         
 <%- include layouts/footer.ejs %>

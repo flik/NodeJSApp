@@ -21,7 +21,7 @@
                     <select name="currency" class="form-control input-sm">
 						<option value="USD">USD</option>
 						<option value="EUR">EUR</option>
-						<option value="PKR">PKR</option>
+						<option value="AUD">AUD</option>
                     </select>
                      
                     </td>
@@ -36,7 +36,7 @@
                  </tr>
                  
                  <tr>
-                    <td class="label">Card Number</td><td>:  <input type="text" size="20" autocomplete="off" name="number" required></td>
+                    <td class="label">Card Number</td><td>:  <input type="text" size="20" autocomplete="off" id="number" name="number" required></td>
                  </tr>
                  
                  <tr>
@@ -60,6 +60,26 @@
       </form>
     </div>
     <script src="https://js.braintreegateway.com/v1/braintree.js"></script>
+ 
+       <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+<script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+<script>
+	// just for the demos, avoids form submit
+	jQuery.validator.setDefaults({
+		debug: true,
+		success: "valid"
+	});
+	$( "#braintree-payment-form" ).validate({
+		rules: {
+			number: {
+				required: true,
+				creditcard: true
+			}
+		}
+	});
+</script>
+ 
     <script>
       //var braintree = Braintree.create("YourClientSideEncryptionKey");
       //braintree.onSubmitEncryptForm('braintree-payment-form');
