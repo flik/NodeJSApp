@@ -64,28 +64,10 @@
  
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	
-	
-	<script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
-	<script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
-
+	 
 	<script>
 	$(document).ready(function() {
-	 /*
-	
-		// just for the demos, avoids form submit
-		jQuery.validator.setDefaults({
-			debug: true,
-			success: "valid"
-		});
-		$( "#braintree-payment-form" ).validate({
-			rules: {
-				number: {
-					required: true,
-					creditcard: true
-				}
-			}
-		});
-		*/
+	  
 		$("#braintree-payment-form").submit(function() {
 				
 			var card = $('#number').val();
