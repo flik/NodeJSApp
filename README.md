@@ -1,6 +1,8 @@
 # NodeJSApp
 NodeJSApp for Credit card processing
 
+demo: http://128.199.236.127:4300/
+
 This is a very basic application Node.js n mySQL.
  
 ## Installation
